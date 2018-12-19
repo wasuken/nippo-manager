@@ -1,0 +1,25 @@
+#|-*- mode:lisp -*-|#
+(in-package :cl-user)
+(defpackage :lake.user
+  (:use :cl :lake :cl-syntax)
+  (:shadowing-import-from :lake
+						  :directory))
+(in-package :lake.user)
+
+(use-syntax :interpol)
+ ;;; here follow your tasks...
+(task "test" ()
+	  (ql:quickload '(:prove :modest-config :dexador :jp
+					  :cl-base64 :cl-json :mylib :cl-ppcre
+					  :cl-markdown) :silent t)
+	  (load #P"nippo-manager.asd")
+	  (load #P"nippo-manager-test.asd")
+	  (asdf:test-system :nippo-manager-test))
+
+(task "today-post" ()
+	  (ql:quickload '(:prove :modest-config :dexador :jp
+					  :cl-base64 :cl-json :mylib :cl-ppcre
+					  :cl-markdown) :silent t)
+	  (load #P"nippo-manager.asd")
+	  (load #P"run-main.asd")
+	  (asdf:load-system :run-main))
